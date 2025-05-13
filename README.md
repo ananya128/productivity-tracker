@@ -128,7 +128,4 @@ Accessible at: http://localhost:8001/search
 
 ## DECISIONS.md
 
-See the DECISIONS.md file for:
-	•	Library choices (e.g., LangChain, Chroma)
-	•	Embedding model used (text-embedding-3-large)
-	•	Justification for separating summary + search APIs
+See the DECISIONS.md file.
