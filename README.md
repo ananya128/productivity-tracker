@@ -62,9 +62,10 @@ productivity-tracker/
 ## 🧠 .env Setup
 
 Inside `src/backend/`, create a `.env` file with the following content:
+```bash
 OPENAI_API_KEY=sk-xxxxx
+```
 
-``
 
 ---
 
