@@ -115,7 +115,7 @@ Accessible at: http://localhost:8001/search
 	•	Weeks with focus level below 5
 	•	Find weeks when I completed over 25 tasks
 	•	Show weeks where most productive day was Tuesday
-	•	Low focus but high task output
+	•	Find weeks when I was very focused
 
 
 
