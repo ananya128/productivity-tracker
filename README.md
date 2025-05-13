@@ -128,4 +128,4 @@ Accessible at: http://localhost:8001/search
 
 ## DECISIONS.md
 
-See the DECISIONS.md file.
+See the [DECISIONS.md](https://github.com/ananya128/productivity-tracker/blob/main/decisions.md) file.
