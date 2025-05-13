@@ -6,3 +6,7 @@ langchain
 chromadb
 pydantic
 numpy
+langchain-community
+tqdm
+tiktoken
+langchain-openai

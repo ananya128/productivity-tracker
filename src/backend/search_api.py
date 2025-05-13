@@ -54,7 +54,9 @@ Return the filters as a JSON object in this format:
     "most_productive_day": {{ "eq": "Friday" }}
 }}
 
-Do not invent or rename any field names — use only the allowed list above.
+DO NOT make up or guess field names or values. Follow this very strictly.
+For "focus_tag" ONLY acceptable values are: "High Focus", "Medium Focus", "Low Focus". 
+For "focus_level" ONLY use valid numeric comparisons with keys like "gte", "lte", "eq".
 """
 
     print("🔍 Sending LLM prompt:\n", prompt)
@@ -70,6 +72,45 @@ Do not invent or rename any field names — use only the allowed list above.
         match = re.search(r"{.*}", content, re.DOTALL)
         filters_json = match.group(0) if match else "{}"
         parsed = json.loads(filters_json)
+
+        ALLOWED_FIELDS = {"task_count", "focus_level", "most_productive_day", "total_hours", "focus_tag", "week"}
+        ALLOWED_FOCUS_TAGS = {"High Focus", "Medium Focus", "Low Focus"}
+        NUMERIC_FIELDS = {"focus_level", "task_count", "total_hours"}
+
+        normalized = {}
+
+        for key, ops in parsed.items():
+            if key not in ALLOWED_FIELDS:
+                continue
+
+            # Numeric field: cast values to float
+            if key in NUMERIC_FIELDS:
+                clean_ops = {}
+                for op, val in ops.items():
+                    try:
+                        clean_ops[op] = float(val)
+                    except:
+                        continue
+                if clean_ops:
+                    normalized[key] = clean_ops
+
+            # focus_tag: enforce only known values
+            elif key == "focus_tag":
+                for op, val in ops.items():
+                    if val in ALLOWED_FOCUS_TAGS:
+                        normalized[key] = {op: val}
+
+            # most_productive_day: keep as-is, but capitalize
+            elif key == "most_productive_day":
+                for op, val in ops.items():
+                    normalized[key] = {op: val.capitalize()}
+
+            # For 'week' and others (no enforcement, trust LLM within allowed keys)
+            else:
+                normalized[key] = ops
+
+        parsed = normalized
+        print("✅ Parsed filters:\n", parsed)
 
         field_aliases = {
             "completed_tasks": "task_count",
